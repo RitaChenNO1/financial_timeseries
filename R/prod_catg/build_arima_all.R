@@ -5,7 +5,7 @@
 build_arima_all <- function(ts_rev,fit.val,fit.training)
 {
         #ARIMA(p,d,q)x(P,D,Q)
-        pdq<-matrix(c(0,0,0, 1,1,0, 1,0,0, 1,0,1, 1,1,1, 0,0,1, 0,1,1, 0,1,0 0,2,2),nrow=9,ncol=3,byrow=TRUE)
+        pdq<-matrix(c(0,0,0, 1,1,0, 1,0,0, 1,0,1, 1,1,1, 0,0,1, 0,1,1, 0,1,0, 0,2,2),nrow=9,ncol=3,byrow=TRUE)
         sPDQ<-matrix(c(1,1,0, 0,1,1, 1,0,0, 0,0,1),nrow=4,ncol=3,byrow=TRUE)
         period<-matrix(c(0,12,4),nrow=3,ncol=1,byrow=TRUE)
         #pdq_i<- 1 
@@ -53,9 +53,9 @@ build_arima_all <- function(ts_rev,fit.val,fit.training)
                                 f_may<-forecast.fit$mean[1]
                                 f_june<-forecast.fit$mean[2]
                                 f_july<-forecast.fit$mean[3]
-                                a_may<-fit.val$cp_rev[1]
-                                a_june<-fit.val$cp_rev[2]
-                                a_july<-fit.val$cp_rev[3]
+                                a_may<-fit.val[,4][1]
+                                a_june<-fit.val[,4][2]
+                                a_july<-fit.val[,4][3]
                                 gap_may<-a_may-f_may
                                 gap_pct_may<-gap_may/a_may*100
                                 gap_june<-a_june-f_june
@@ -65,9 +65,9 @@ build_arima_all <- function(ts_rev,fit.val,fit.training)
                                 
                                 #get the average of cp_rev
                                 mean<-mean(fit.training[,4])                
-                                forecast1=cbind(model_i,rev.fit$aic,fit.val[,2][1],a_may,f_may,gap_may,gap_pct_may,mean,forecast.fit$lower[1],forecast.fit$upper[1],pdq[pdq_i,1],pdq[pdq_i,2],pdq[pdq_i,3],sPDQ[sPDQ_i,1],sPDQ[sPDQ_i,2],sPDQ[sPDQ_i,3],period[period_i])
-                                forecast2=cbind(model_i,rev.fit$aic,fit.val[,2][2],a_june,f_june,gap_june,gap_pct_june,mean,forecast.fit$lower[2],forecast.fit$upper[2],pdq[pdq_i,1],pdq[pdq_i,2],pdq[pdq_i,3],sPDQ[sPDQ_i,1],sPDQ[sPDQ_i,2],sPDQ[sPDQ_i,3],period[period_i])
-                                forecast3=cbind(model_i,rev.fit$aic,fit.val[,2][3],a_july,f_july,gap_july,gap_pct_july,mean,forecast.fit$lower[3],forecast.fit$upper[3],pdq[pdq_i,1],pdq[pdq_i,2],pdq[pdq_i,3],sPDQ[sPDQ_i,1],sPDQ[sPDQ_i,2],sPDQ[sPDQ_i,3],period[period_i])
+                                forecast1=cbind(model_i,fit.val[,2][1],a_may,f_may,gap_may,gap_pct_may,mean,rev.fit$aic,forecast.fit$lower[1],forecast.fit$upper[1],pdq[pdq_i,1],pdq[pdq_i,2],pdq[pdq_i,3],sPDQ[sPDQ_i,1],sPDQ[sPDQ_i,2],sPDQ[sPDQ_i,3],period[period_i])
+                                forecast2=cbind(model_i,fit.val[,2][2],a_june,f_june,gap_june,gap_pct_june,mean,rev.fit$aic,forecast.fit$lower[2],forecast.fit$upper[2],pdq[pdq_i,1],pdq[pdq_i,2],pdq[pdq_i,3],sPDQ[sPDQ_i,1],sPDQ[sPDQ_i,2],sPDQ[sPDQ_i,3],period[period_i])
+                                forecast3=cbind(model_i,fit.val[,2][3],a_july,f_july,gap_july,gap_pct_july,mean,rev.fit$aic,forecast.fit$lower[3],forecast.fit$upper[3],pdq[pdq_i,1],pdq[pdq_i,2],pdq[pdq_i,3],sPDQ[sPDQ_i,1],sPDQ[sPDQ_i,2],sPDQ[sPDQ_i,3],period[period_i])
                                 fall<-rbind(as.matrix(forecast1),as.matrix(forecast2),as.matrix(forecast3))
                                 predAll<-rbind(predAll,fall)
                                 model_i<-model_i+1

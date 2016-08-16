@@ -4,12 +4,10 @@
 ###Author: Rita Chen 2016/8/10
 arima_all <- function(data_src,start_yr,start_mth,filepath,AMS_APJ_EMEA,rev_type)
 {        
-        all_id<-unique(data_src[,1])        
-        predAll<-NULL
-        #prod_ln_id<-prod_ln_id_unique[1]
+        all_id<-unique(data_src[,1]) 
         for (id in all_id ) {
                 print(id)
-                predAll1<-sample_buildArima(data_src,start_yr,start_mth,id)
+                predAll<-sample_buildArima(data_src,start_yr,start_mth,id)
                 fileFullPath<-paste(filepath,AMS_APJ_EMEA,rev_type,id,".csv", sep = "_")
                 #predAll<-rbind(predAll,predAll1)
                 #every prod catg nm is a file
