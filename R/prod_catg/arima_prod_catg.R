@@ -11,7 +11,11 @@ arima_all <- function(data_src,start_yr,start_mth,filepath,AMS_APJ_EMEA,rev_type
                 fileFullPath<-paste(filepath,AMS_APJ_EMEA,rev_type,id,".csv", sep = "_")
                 #predAll<-rbind(predAll,predAll1)
                 #every prod catg nm is a file
-                #colnames(predAll)<-c("rgn","rev_type","analysis_dim","prod_ln_id","seasonaltype",'month','actual','forecast','forecast_lower','forecast_upper','gap','gap_percent','mean_cp_rev','p','d','q')
+                #print(dim(predAll))
+                if(!is.null(predAll))
+                {
+                colnames(predAll)<-c("Model Index","Rev_Rgn_Mth","Actual","Forecast","Gap",'Gap%','Rev_AVG','AIC','forecast_lower','forecast_upper','p','d','q','sp','sd','sq','period')
+                }
                 write.table(predAll, file = fileFullPath,quote = TRUE, sep = ",",row.names = FALSE)
         }
         
